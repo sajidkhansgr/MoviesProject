@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MovieUI.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Movie List</h2>
+
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Filter: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />
+            <input type="submit" value="Filter" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Title</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ReleaseSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Release Date</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["LocationSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Location</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DistributorSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Distributor</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DirectorSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Director</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["WriterSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Writer</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Release_Year)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Locations)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Production_Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Writer)
+                </td>
+
+
+            </tr>
+        }
+    </tbody>
+</table>
