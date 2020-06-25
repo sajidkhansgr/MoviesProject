@@ -33,64 +33,67 @@ namespace MovieUI.Controllers
             var result = client.GetAsync("https://data.sfgov.org/resource/yitu-d5am.json").Result;
 
             IEnumerable<Movie> movies = result.Content.ReadAsAsync<List<Movie>>().Result;
-
             var movieList = from s in movies
                             select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                movieList = movieList.Where(s => s.Title.Contains(searchString));
-                                       //|| s.Locations.Contains(searchString) ||
-                                       //s.Release_Year.Contains(searchString) ||
-                                       //s.Director.Contains(searchString) ||
-                                       //s.Writer.Contains(searchString) ||
-                                       //s.Production_Company.Contains(searchString));
+                movieList = movieList.OfType<Movie>().Where(s => s.Title.Contains(searchString)||
+                s.Locations.Contains(searchString) ||
+                s.Release_Year.Contains(searchString) ||
+                s.Director.Contains(searchString) ||
+                s.Writer.Contains(searchString) ||
+                s.Production_Company.Contains(searchString)
+
+
+                );
+                
             }
 
 
             switch (sortOrder)
             {
                 case "title_desc":
-                    movies = movies.OrderByDescending(s => s.Title);
+                    movieList = movieList.OrderByDescending(s => s.Title);
                     break;
                 case "title_asc":
-                    movies = movies.OrderBy(s => s.Title);
+                    movieList = movieList.OrderBy(s => s.Title);
                     break;
                 case "release_desc":
-                    movies = movies.OrderByDescending(s => s.Release_Year);
+                    movieList = movieList.OrderByDescending(s => s.Release_Year);
                     break;
                 case "release_asc":
-                    movies = movies.OrderBy(s => s.Release_Year);
+                    movieList = movieList.OrderBy(s => s.Release_Year);
                     break;
                 case "location_desc":
-                    movies = movies.OrderByDescending(s => s.Locations);
+                    movieList = movieList.OrderByDescending(s => s.Locations);
                     break;
                 case "location_asc":
-                    movies = movies.OrderBy(s => s.Locations);
+                    movieList = movieList.OrderBy(s => s.Locations);
                     break;
                 case "distributor_desc":
-                    movies = movies.OrderByDescending(s => s.Production_Company);
+                    movieList = movieList.OrderByDescending(s => s.Production_Company);
                     break;
                 case "distributor_asc":
-                    movies = movies.OrderBy(s => s.Production_Company);
+                    movieList = movieList.OrderBy(s => s.Production_Company);
                     break;
                 case "director_desc":
-                    movies = movies.OrderByDescending(s => s.Director);
+                    movieList = movieList.OrderByDescending(s => s.Director);
                     break;
                 case "director_asc":
-                    movies = movies.OrderBy(s => s.Director);
+                    movieList = movieList.OrderBy(s => s.Director);
                     break;
                 case "writer_desc":
-                    movies = movies.OrderByDescending(s => s.Writer);
+                    movieList = movieList.OrderByDescending(s => s.Writer);
                     break;
                 case "writer_asc":
-                    movies = movies.OrderBy(s => s.Writer);
+                    movieList = movieList.OrderBy(s => s.Writer);
                     break;
                 default:
-                    movies = movies.OrderBy(s => s.Title);
+                    movieList = movieList.OrderBy(s => s.Title);
                     break;
             }
 
-            return View(movies);
+            return View(movieList);
         }
 
         public IActionResult Privacy()
