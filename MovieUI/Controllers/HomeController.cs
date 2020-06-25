@@ -38,15 +38,12 @@ namespace MovieUI.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 movieList = movieList.OfType<Movie>().Where(s => s.Title.Contains(searchString)||
-                s.Locations.Contains(searchString) ||
                 s.Release_Year.Contains(searchString) ||
                 s.Director.Contains(searchString) ||
                 s.Writer.Contains(searchString) ||
                 s.Production_Company.Contains(searchString)
 
-
                 );
-                
             }
 
 
